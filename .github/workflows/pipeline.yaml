@@ -4,16 +4,8 @@ name: Rust Lint
 
 on:
   push:
-    paths:
-      - '**/*.rs'
-      - 'Cargo.toml'
-      - 'Cargo.lock'
-  pull_request:
-    paths:
-      - '**/*.rs'
-      - 'Cargo.toml'
-      - 'Cargo.lock'
-
+    branches: [ main]
+      
 jobs:
   lint:
     name: Run Clippy
