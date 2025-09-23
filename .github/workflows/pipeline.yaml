@@ -7,22 +7,61 @@ on:
     branches: [ main]
       
 jobs:
-  lint:
-    name: Run Clippy
+  rust-ci:
+    name: Lint, Format, Test Each Rust Project
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Install Rust with Clippy
+      - name: Install Rust
         uses: actions-rs/toolchain@v1
         with:
           toolchain: stable
           override: true
-          components: clippy
+          components: clippy, rustfmt
 
-      - name: Run Clippy and annotate PR
-        uses: actions-rs/clippy-check@v1
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
+      # --------------------
+      # Project 2
+      - name: Format check - project2
+        run: cargo fmt --check
+        working-directory: ./2. hello cargo/hello_cargo
+
+      - name: Lint - project2
+        run: cargo clippy --all-targets --all-features -- -D warnings
+        working-directory: ./2. hello cargo/hello_cargo
+
+      - name: Test - project2
+        run: cargo test
+        working-directory: ./2. hello cargo/hello_cargo
+
+      # --------------------
+      # Project 3
+      - name: Format check - project3
+        run: cargo fmt --check
+        working-directory: 3. Guessing Game/guessing_game
+
+      - name: Lint - project3
+        run: cargo clippy --all-targets --all-features -- -D warnings
+        working-directory: 3. Guessing Game/guessing_game
+
+      - name: Test - project3
+        run: cargo test
+        working-directory: 3. Guessing Game/guessing_game
+
+      # --------------------
+      # Project 4
+      - name: Format check - project4
+        run: cargo fmt --check
+        working-directory: 4. variables/variables
+
+      - name: Lint - project4
+        run: cargo clippy --all-targets --all-features -- -D warnings
+        working-directory: 4. variables/variables
+
+      - name: Test - project4
+        run: cargo test
+        working-directory: 4. variables/variables
+
+      
